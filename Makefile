@@ -1,4 +1,5 @@
-HYPERFINE := $(shell command -v hyperfine 2> /dev/null)
+BINDIR ?= bin
+SBOM_GENERATOR_TOOL_VERSION ?= v0.0.15
 
 .PHONY: build
 build:
@@ -30,3 +31,15 @@ tag:
 	@git-chglog --output CHANGELOG.md
 	@git commit -m 'Update CHANGELOG.md' -- CHANGELOG.md
 	@git tag -f "${TAG}"
+
+bin:
+	mkdir $(BINDIR)
+
+.PHONY: download-spdx-sbom-generator
+download-spdx-sbom-generator: bin
+	curl -L -o $(BINDIR)/spdx-sbom-generator-$(SBOM_GENERATOR_TOOL_VERSION)-linux-amd64.tar.gz https://github.com/opensbom-generator/spdx-sbom-generator/releases/download/$(SBOM_GENERATOR_TOOL_VERSION)/spdx-sbom-generator-$(SBOM_GENERATOR_TOOL_VERSION)-linux-amd64.tar.gz
+	tar -xf ./$(BINDIR)/spdx-sbom-generator-$(SBOM_GENERATOR_TOOL_VERSION)-linux-amd64.tar.gz --directory $(BINDIR)
+
+.PHONY: sbom
+sbom:
+	./$(BINDIR)/spdx-sbom-generator -f json

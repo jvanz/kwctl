@@ -97,6 +97,30 @@ jobs:
           name: kwctl-linux-${{ matrix.targetarch }}
           path: kwctl-linux-${{ matrix.targetarch }}.zip
 
+      - name: Generate SBOM
+        run: |
+          make download-spdx-sbom-generator sbom
+          # SBOM files should have "sbom" in the name due the CLO monitor
+          # https://clomonitor.io/docs/topics/checks/#software-bill-of-materials-sbom
+          mv bom-cargo.json kwctl-linux-${{ matrix.targetarch }}-sbom.spdx.json
+
+      - name: Sign BOM file
+        run: |
+          cosign sign-blob --output-certificate kwctl-linux-${{ matrix.targetarch }}-sbom.spdx.cert \
+            --output-signature kwctl-linux-${{ matrix.targetarch }}-sbom.spdx.sig \
+            kwctl-linux-${{ matrix.targetarch }}-sbom.spdx.json
+        env:
+          COSIGN_EXPERIMENTAL: 1
+
+      - name: Upload kwctl SBOM files
+        uses: actions/upload-artifact@v2
+        with:
+          name: kwctl-linux-${{ matrix.targetarch }}-sbom
+          path: |
+            kwctl-linux-${{ matrix.targetarch }}-sbom.spdx.json
+            kwctl-linux-${{ matrix.targetarch }}-sbom.spdx.cert
+            kwctl-linux-${{ matrix.targetarch }}-sbom.spdx.sig
+
   build-darwin-aarch64:
     name: Build darwin (aarch64) Apple Silicon binary
     runs-on: macos-latest
