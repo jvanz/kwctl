@@ -95,10 +95,12 @@ jobs:
         with:
           name: kwctl-linux-${{ matrix.targetarch }}
           path: kwctl-linux-${{ matrix.targetarch }}.zip
-
+      - name: Install SBOM generator tool
+        uses: kubewarden/github-actions/sbom-generator-installer@v1
       - name: Generate SBOM
         run: |
-          make download-spdx-sbom-generator sbom
+          spdx-sbom-generator -f json
+
           # SBOM files should have "sbom" in the name due the CLO monitor
           # https://clomonitor.io/docs/topics/checks/#software-bill-of-materials-sbom
           mv bom-cargo.json kwctl-linux-${{ matrix.targetarch }}-sbom.spdx.json
