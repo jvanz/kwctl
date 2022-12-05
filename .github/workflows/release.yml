@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
+        targetarch: [ "x86_64" ]
         targetarch: [ "aarch64", "x86_64" ]
         include:
           - targetarch: aarch64
@@ -28,8 +29,8 @@ jobs:
     permissions:
       packages: write
       id-token: write
-    needs:
-      - ci
+      needs:
+        - ci
     steps:
       - name: Configure Ubuntu repositories
         run: |
@@ -264,15 +265,68 @@ jobs:
       id: download
       uses: actions/download-artifact@v2
 
-    - name: Create Release
-      id: create-release
-      uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Retrieve tag name
+      run: |
+        echo TAG_NAME=$(echo ${{ github.ref }} | sed -e "s|refs/tags/||") >> $GITHUB_ENV
+
+    - name: Get release ID from the release created by release drafter
+      uses: actions/github-script@v6
       with:
-        tag_name: ${{ github.ref }}
-        name: ${{ github.ref_name }}
-        draft: false
-        prerelease: ${{ contains(github.ref, '-alpha') || contains(github.ref, '-beta') || contains(github.ref, '-rc') }}
-        files: |
-          ${{steps.download.outputs.download-path}}/kwctl*/**
+        script: |
+          let releases = await github.rest.repos.listReleases({
+             owner: context.repo.owner,
+             repo: context.repo.repo,
+          });
+          for (const release of releases.data) {
+            if (release.draft) {
+                    core.info(`${release}`)
+                    core.exportVariable('RELEASE_ID', release.id)
+                    return
+            }
+          }
+          core.setFailed(`Draft release not found`)
+
+    - name: Upload release assets
+      uses: actions/github-script@v6
+      env:
+        DOWNLOAD_PATH: "${{steps.download.outputs.download-path}}"
+      with:
+        script: |
+          const {RELEASE_ID, DOWNLOAD_PATH} = process.env
+          core.info(`${RELEASE_ID} - ${DOWNLOAD_PATH}`)
+          let fs = require('fs');
+          let path = require('path');
+          const patterns = [
+            `${DOWNLOAD_PATH}/kwctl-linux-*/*`,
+            `${DOWNLOAD_PATH}/kwctl-darwin-*/*`,
+            `${DOWNLOAD_PATH}/kwctl-windows-*/*`,
+          ]
+          let globber = await glob.create(patterns.join('\n'))
+          let files =  await globber.glob()
+          for (const file of files) {
+            core.info(file)
+            let file_data = fs.readFileSync(file);
+
+            github.rest.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: `${RELEASE_ID}`,
+              name: path.basename(file),
+              data: file_data,
+            });
+          }
+
+    - name: Publish release
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const {RELEASE_ID} = process.env
+          const {TAG_NAME} = process.env
+          github.rest.repos.updateRelease({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            release_id: `${RELEASE_ID}`,
+            draft: false,
+            tag_name: `${TAG_NAME}`,
+            name: `${TAG_NAME}`
+          });
