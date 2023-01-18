@@ -40,6 +40,9 @@ jobs:
           sudo sed -i "$ a deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-security multiverse" /etc/apt/sources.list
 
           sudo apt update -y
+      - name: Install dependencies
+        run: |
+          sudo apt install -y libssl-dev:${{ matrix.arch }}
       - name: Install Musl and configure gcc spec
         run: |
           sudo apt install -y musl-dev:${{ matrix.arch }}
