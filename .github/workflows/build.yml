@@ -44,7 +44,7 @@ jobs:
           sudo apt update -y
       - name: Install dependencies
         run: |
-          sudo apt install -y libssl-dev:${{ matrix.arch }} pkgconfig:${{ matrix.arch }}
+          sudo apt install -y libssl-dev:${{ matrix.arch }}
 
       - name: Install Musl and configure gcc spec
         run: |
@@ -72,6 +72,12 @@ jobs:
           echo "------------------------------------------------------------"
           echo "------------------------------------------------------------"
           ls /usr/lib/${{ matrix.targetarch }}-linux-musl/
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          cat /usr/lib/${{ matrix.targetarch }}-linux-musl/musl-gcc.specs
 
       - uses: sigstore/cosign-installer@main
 
