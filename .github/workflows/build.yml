@@ -43,7 +43,16 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt install -y libssl-dev:${{ matrix.arch }}
-          ls /usr/lib/
+
+      - name: debug
+          ls /usr/lib/${{ matrix.targetarch }}-linux-gnu
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          ls /usr/lib/${{ matrix.targetarch }}-linux-musl/
+
       - name: Install Musl and configure gcc spec
         run: |
           sudo apt install -y musl-dev:${{ matrix.arch }}
