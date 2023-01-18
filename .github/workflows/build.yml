@@ -44,16 +44,6 @@ jobs:
         run: |
           sudo apt install -y libssl-dev:${{ matrix.arch }}
 
-      - name: debug
-        run: |
-          ls /usr/lib/${{ matrix.targetarch }}-linux-gnu
-          echo "------------------------------------------------------------"
-          echo "------------------------------------------------------------"
-          echo "------------------------------------------------------------"
-          echo "------------------------------------------------------------"
-          echo "------------------------------------------------------------"
-          ls /usr/lib/${{ matrix.targetarch }}-linux-musl/
-
       - name: Install Musl and configure gcc spec
         run: |
           sudo apt install -y musl-dev:${{ matrix.arch }}
@@ -70,6 +60,16 @@ jobs:
           # The cargo configuration to build static binaries is not working. Thus,
           # update the spec file to ensure that.
           sudo sed -i "s/-dynamic-linker.*/-no-dynamic-linker  -nostdlib %{shared:-shared} %{static:-static} %{rdynamic:-no-export-dynamic}/g" /usr/lib/${{ matrix.targetarch }}-linux-musl/musl-gcc.specs
+
+      - name: debug
+        run: |
+          ls /usr/lib/${{ matrix.targetarch }}-linux-gnu
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          echo "------------------------------------------------------------"
+          ls /usr/lib/${{ matrix.targetarch }}-linux-musl/
 
       - uses: sigstore/cosign-installer@main
 
