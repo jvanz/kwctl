@@ -45,6 +45,7 @@ jobs:
           sudo apt install -y libssl-dev:${{ matrix.arch }}
 
       - name: debug
+        run: |
           ls /usr/lib/${{ matrix.targetarch }}-linux-gnu
           echo "------------------------------------------------------------"
           echo "------------------------------------------------------------"
