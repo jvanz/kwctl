@@ -10,14 +10,15 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        targetarch: [ "aarch64", "x86_64" ]
+        targetarch: [ "aarch64" ]
+        #targetarch: [ "aarch64", "x86_64" ]
         include:
           - targetarch: aarch64
             arch: arm64
             rustflags: ""
-          - targetarch: x86_64
-            arch: amd64
-            rustflags: "-C target-feature=+crt-static"
+            #  - targetarch: x86_64
+            #    arch: amd64
+            #    rustflags: "-C target-feature=+crt-static"
     permissions:
       packages: write
       id-token: write
@@ -42,7 +43,7 @@ jobs:
           sudo apt update -y
       - name: Install dependencies
         run: |
-          sudo apt install -y libssl-dev:${{ matrix.arch }}
+          sudo apt install -y libssl-dev:${{ matrix.arch }} pkgconfig:${{ matrix.arch }}
 
       - name: Install Musl and configure gcc spec
         run: |
