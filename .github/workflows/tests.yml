@@ -1,8 +1,10 @@
 name: Continuous integration
 on:
-  - push
-  - pull_request
-  - workflow_call
+  push:
+    branches:
+      - "main"
+  pull_request:
+  workflow_call:
 
 # Declare default permissions as read only.
 permissions: read-all
@@ -21,20 +23,6 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: check
-  test:
-    name: Test Suite
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --workspace
   fmt:
     name: Rustfmt
     runs-on: ubuntu-latest
@@ -65,8 +53,33 @@ jobs:
         with:
           command: clippy
           args: -- -D warnings
+  build:
+    name: Build kwctl
+    needs:
+      - check
+      - fmt
+      - clippy
+    uses: ./.github/workflows/build.yml
+  test:
+    name: Test Suite
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --workspace
   e2e:
     name: e2e tests
+    needs:
+      - build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
