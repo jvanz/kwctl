@@ -55,6 +55,9 @@ jobs:
           args: -- -D warnings
   build:
     name: Build kwctl
+    permissions:
+      packages: write
+      id-token: write
     needs:
       - check
       - fmt
