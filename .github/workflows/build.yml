@@ -1,6 +1,5 @@
 name: kwctl build
 on:
-  push:
   workflow_call:
 env:
   CARGO_TERM_COLOR: always
