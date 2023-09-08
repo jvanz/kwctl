@@ -31,7 +31,7 @@ jobs:
           target: ${{matrix.targetarch}}-unknown-linux-musl
           override: true
 
-      - uses: actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b # v1.0.1
+      - uses: actions-rs/cargo@844f36862e911db73fe0815f00a4a2602c279505 # v1.0.3
         with:
           use-cross: true
           command: build
@@ -111,7 +111,7 @@ jobs:
       - run: rustup target add ${{ matrix.targetarch }}-apple-darwin
 
       - name: Build kwctl
-        uses: actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b # v1.0.1
+        uses: actions-rs/cargo@844f36862e911db73fe0815f00a4a2602c279505 # v1.0.3
         with:
           command: build
           args: --target=${{ matrix.targetarch }}-apple-darwin --release
@@ -187,7 +187,7 @@ jobs:
       - run: rustup target add x86_64-pc-windows-msvc
 
       - name: Build kwctl
-        uses: actions-rs/cargo@ae10961054e4aa8b4aa7dffede299aaf087aa33b # v1.0.1
+        uses: actions-rs/cargo@844f36862e911db73fe0815f00a4a2602c279505 # v1.0.3
         with:
           command: build
           args: --target=x86_64-pc-windows-msvc --release
