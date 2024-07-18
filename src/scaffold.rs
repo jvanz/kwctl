@@ -163,11 +163,11 @@ pub(crate) fn manifest(
     let wasm_path = crate::utils::wasm_path(&uri)?;
 
     let metadata = Metadata::from_path(&wasm_path)?
-        .ok_or_else(||
-            anyhow!(
-                "No Kubewarden metadata found inside of '{}'.\nPolicies can be annotated with the `kwctl annotate` command.",
-                uri)
-        )?;
+            .ok_or_else(||
+                        anyhow!(
+                            "No Kubewarden metadata found inside of '{}'.\nPolicies can be annotated with the `kwctl annotate` command.",
+                            uri)
+                       )?;
 
     let settings_yml: serde_yaml::Mapping = serde_yaml::from_str(settings.unwrap_or("{}"))?;
 

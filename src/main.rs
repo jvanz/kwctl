@@ -365,6 +365,12 @@ async fn main() -> Result<()> {
             if let Some(matches) = matches.subcommand_matches("scaffold") {
                 if let Some(matches) = matches.subcommand_matches("manifest") {
                     let uri_or_sha_prefix = matches.get_one::<String>("uri_or_sha_prefix").unwrap();
+                    //TODO allow destination customization as we do in the pull cmd?
+                    let destination = PullDestination::MainStore;
+                    let sources = remote_server_options(matches)?;
+                    let _policy =
+                        pull::pull(uri_or_sha_prefix, sources.as_ref(), destination).await?;
+
                     let resource_type = matches.get_one::<String>("type").unwrap();
                     if matches.contains_id("settings-path") && matches.contains_id("settings-json")
                     {
