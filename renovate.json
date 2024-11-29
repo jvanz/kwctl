@@ -1,20 +1,26 @@
 {
   "extends": [
     "config:recommended",
-    "schedule:earlyMondays",
     "helpers:pinGitHubActionDigests"
   ],
   "labels": [
-    "dependencies"
+    "area/dependencies"
+  ],
+  "schedule": [
+	  "* * * * 0,6"
   ],
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": true,
+    "automerge": true,
+    "schedule": "* * * * *"
   },
   "major": {
-    "enabled": false
+    "enabled": true,
+      "automerge": false
   },
   "minor": {
-    "enabled": false
+    "enabled": true,
+    "automerge": false
   },
   "patch": {
     "enabled": true
@@ -28,7 +34,9 @@
       "groupSlug": "all-patch",
       "matchPackageNames": [
         "*"
-      ]
+      ],
+      "automerge": true,
+      "schedule": "* * * * *"
     }
   ],
   "rebaseWhen": "behind-base-branch"
