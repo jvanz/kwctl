@@ -2859,9 +2859,9 @@ dependencies = [
 
 [[package]]
 name = "lexical-write-float"
-version = "1.0.3"
+version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "27adf08e2f91ff44ab54bbac0c4579303f0865730870f91b58c044df821f114c"
+checksum = "d7176448fc083401942d3cdd767416e35537fc1de055dfb7c615bcd4307ba0c7"
 dependencies = [
  "lexical-util",
  "lexical-write-integer",
@@ -2870,9 +2870,9 @@ dependencies = [
 
 [[package]]
 name = "lexical-write-integer"
-version = "1.0.3"
+version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8b4e5d27d742da13f013765f849efc0c4b6173e0e64404546475eb5ee0931e2c"
+checksum = "20fdc861893cc05203d57de038ab2e15519ad794bd6e3064fd081e6b42abffe0"
 dependencies = [
  "lexical-util",
  "static_assertions",
