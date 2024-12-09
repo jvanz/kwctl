@@ -2850,9 +2850,9 @@ dependencies = [
 
 [[package]]
 name = "lexical-util"
-version = "1.0.5"
+version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ee72ef7886d94f30741743126c1ec123564749ee339281b9834d0e913f2d40fe"
+checksum = "5a82e24bf537fd24c177ffbbdc6ebcc8d54732c35b50a3f28cc3f4e4c949a0b3"
 dependencies = [
  "static_assertions",
 ]
