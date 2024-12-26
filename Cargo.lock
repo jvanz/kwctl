@@ -2767,7 +2767,7 @@ dependencies = [
  "pulldown-cmark",
  "pulldown-cmark-mdcat",
  "regex",
- "reqwest 0.12.9",
+ "reqwest 0.11.27",
  "rstest",
  "rustls-pki-types",
  "semver",
@@ -3240,7 +3240,7 @@ dependencies = [
  "lazy_static",
  "olpc-cjson",
  "regex",
- "reqwest 0.12.9",
+ "reqwest 0.12.10",
  "serde",
  "serde_json",
  "sha2",
@@ -3265,7 +3265,7 @@ dependencies = [
  "lazy_static",
  "olpc-cjson",
  "regex",
- "reqwest 0.12.9",
+ "reqwest 0.12.10",
  "serde",
  "serde_json",
  "sha2",
@@ -3818,7 +3818,7 @@ dependencies = [
  "pem",
  "rayon",
  "regex",
- "reqwest 0.12.9",
+ "reqwest 0.12.10",
  "rustls 0.23.20",
  "rustls-pki-types",
  "serde",
@@ -4375,6 +4375,7 @@ dependencies = [
  "percent-encoding",
  "pin-project-lite",
  "rustls 0.21.12",
+ "rustls-native-certs 0.6.3",
  "rustls-pemfile 1.0.4",
  "serde",
  "serde_json",
@@ -4396,9 +4397,9 @@ dependencies = [
 
 [[package]]
 name = "reqwest"
-version = "0.12.9"
+version = "0.12.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a77c62af46e79de0a562e1a9849205ffcb7fc1238876e9bd743357570e04046f"
+checksum = "3d3536321cfc54baa8cf3e273d5e1f63f889067829c4b410fcdbac8ca7b80994"
 dependencies = [
  "base64 0.22.1",
  "bytes",
@@ -4419,7 +4420,6 @@ dependencies = [
  "pin-project-lite",
  "quinn",
  "rustls 0.23.20",
- "rustls-native-certs 0.8.1",
  "rustls-pemfile 2.2.0",
  "rustls-pki-types",
  "serde",
@@ -4429,6 +4429,7 @@ dependencies = [
  "tokio",
  "tokio-rustls 0.26.1",
  "tokio-util",
+ "tower",
  "tower-service",
  "url",
  "wasm-bindgen",
@@ -4575,6 +4576,18 @@ dependencies = [
  "rustls-webpki 0.102.8",
  "subtle",
  "zeroize",
+]
+
+[[package]]
+name = "rustls-native-certs"
+version = "0.6.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a9aace74cb666635c918e9c12bc0d348266037aa8eb599b5cba565709a8dff00"
+dependencies = [
+ "openssl-probe",
+ "rustls-pemfile 1.0.4",
+ "schannel",
+ "security-framework 2.11.1",
 ]
 
 [[package]]
@@ -6816,7 +6829,7 @@ version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf221c93e13a30d793f7645a0e7762c55d169dbb0a49671918a2319d289b10bb"
 dependencies = [
- "windows-sys 0.59.0",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]
