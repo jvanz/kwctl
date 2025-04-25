@@ -25,7 +25,7 @@ pulldown-cmark-mdcat = { version = "2.7.1", default-features = false }
 policy-evaluator = { git = "https://github.com/kubewarden/policy-evaluator", tag = "v0.19.9" }
 rustls-pki-types = { version = "1", features = ["alloc"] }
 prettytable-rs = "^0.10"
-pulldown-cmark = { version = "0.12.1", default-features = false }
+pulldown-cmark = { version = "0.13.0", default-features = false }
 regex = "1"
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
@@ -42,7 +42,7 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["fmt"] }
 url = "2.5.0"
 walrus = "0.23.0"
-wasmparser = "0.224"
+wasmparser = "0.229"
 time = "0.3.36"
 semver = { version = "1.0.22", features = ["serde"] }
 
@@ -58,7 +58,7 @@ reqwest = { version = "0", default-features = false, features = [
 assert_cmd = "2.0.14"
 hyper = { version = "1.5.0" }
 predicates = "3.1"
-rstest = "0.24.0"
+rstest = "0.25.0"
 tempfile = "3.15"
 testcontainers = { version = "0.23", features = ["blocking"] }
 tower-test = "0.4"
