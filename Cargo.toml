@@ -19,9 +19,7 @@ humansize = "2.1"
 indicatif = "0.17"
 is-terminal = "0.4.16"
 itertools = { workspace = true }
-k8s-openapi = { workspace = true, default-features = false, features = [
-  "v1_30",
-] }
+k8s-openapi = { workspace = true }
 lazy_static = { workspace = true }
 pem = "3"
 policy-evaluator = { path = "../policy-evaluator" }
